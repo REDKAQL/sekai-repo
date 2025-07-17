@@ -1,0 +1,46 @@
+package sekai
+
+import com.lagradost.cloudstream3.*
+import com.lagradost.cloudstream3.network.loadExtractor
+import com.lagradost.cloudstream3.utils.*
+
+class Sekai : MainAPI() {
+    override var mainUrl = "https://www.sekai.one"
+    override var name = "Sekai.one"
+    override val supportedTypes = setOf(TvType.Anime)
+
+    override suspend fun search(query: String): List<SearchResponse> {
+        val url = "$mainUrl/?s=$query"
+        val doc = app.get(url).document
+        return doc.select("div.post").map {
+            val title = it.select("h2").text()
+            val link = it.select("a").attr("href")
+            val poster = it.select("img").attr("src")
+            newAnimeSearchResponse(title, link, TvType.Anime) {
+                this.posterUrl = poster
+            }
+        }
+    }
+
+    override suspend fun load(url: String): LoadResponse {
+        val doc = app.get(url).document
+        val title = doc.select("h1").text()
+        val episodes = listOf(
+            Episode(url, title)
+        )
+        return newAnimeLoadResponse(title, url, TvType.Anime) {
+            this.episodes = episodes
+            posterUrl = doc.select("img").attr("src")
+        }
+    }
+
+    override suspend fun loadLinks(
+        data: String,
+        isCasting: Boolean,
+        subtitleCallback: (SubtitleFile) -> Unit,
+        callback: (ExtractorLink) -> Unit
+    ): Boolean {
+        loadExtractor(data, mainUrl, subtitleCallback, callback)
+        return true
+    }
+}

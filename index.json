@@ -1,0 +1,16 @@
+{
+    "name": "Sekai One",
+    "developer": "EZE Ninjio",
+    "repoUrl": "https://tonpseudo.github.io/sekai-repo/",
+    "languages": ["fr"],
+    "plugins": [
+        {
+            "name": "Sekai",
+            "package": "sekai",
+            "version": "1.0.0",
+            "url": "https://tonpseudo.github.io/sekai-repo/sekai/Sekai.cs3",
+            "icon": "https://www.sekai.one/favicon.ico",
+            "description": "Extension non officielle Sekai.one"
+        }
+    ]
+}
