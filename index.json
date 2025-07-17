@@ -1,7 +1,7 @@
 {
     "name": "Sekai One",
     "developer": "REDKAQL",
-    "repoUrl": "https://REDKAQL.github.io/sekai-repo/",
+    "repoUrl": "https://REDKAQL.github.io/sekai-repo/index.json",
     "languages": ["fr"],
     "plugins": [
         {
